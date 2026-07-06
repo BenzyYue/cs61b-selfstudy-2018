@@ -127,12 +127,20 @@ public class IntList {
             return null;
         }
 
-        IntList returnedA = new IntList(A.first, null);
-        while (!(A.rest == null)){
-            A = A.rest;
-            returnedA = new IntList(A.first, returnedA);
+        IntList tempList = new IntList(A.first, null);
+        IntList pointerA = A;
+        while(!(pointerA.rest == null)){
+            pointerA = pointerA.rest;
+            tempList = new IntList(pointerA.first, tempList);
         }
-        A = returnedA;
+
+        pointerA = A;
+        while (!(pointerA == null)){
+            pointerA.first = tempList.first;
+            pointerA.rest = tempList.rest;
+            pointerA = pointerA.rest;
+            tempList = tempList.rest;
+        }
         return A;
     }
 
