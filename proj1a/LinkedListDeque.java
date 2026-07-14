@@ -54,25 +54,25 @@ public class LinkedListDeque<T> {
     }
 
     public T removeFirst(){
-        if (this.size == 0){
-            throw new IllegalArgumentException("Illegal argument");
+        if (size > 0) {
+            Node removeNode = this.sentinel.next;
+            this.sentinel.next = removeNode.next;
+            removeNode.next.prev = removeNode.prev;
+            this.size--;
+            return removeNode.item;
         }
-        Node removeNode = this.sentinel.next;
-        this.sentinel.next = removeNode.next;
-        removeNode.next.prev = removeNode.prev;
-        this.size--;
-        return removeNode.item;
+        return null;
     }
 
     public T removeLast(){
-        if (this.size == 0){
-            throw new IllegalArgumentException("Illegal argument");
+        if (size > 0) {
+            Node removeNode = this.sentinel.prev;
+            this.sentinel.prev = removeNode.prev;
+            removeNode.prev.next = removeNode.next;
+            this.size--;
+            return removeNode.item;
         }
-        Node removeNode = this.sentinel.prev;
-        this.sentinel.prev = removeNode.prev;
-        removeNode.prev.next = removeNode.next;
-        this.size--;
-        return removeNode.item;
+        return null;
     }
 
     public T get(int index){
@@ -91,13 +91,8 @@ public class LinkedListDeque<T> {
         if (index > this.size){
             throw new IndexOutOfBoundsException("Index out of bound");
         }
-        Node pointerNode = this.sentinel;
-        if (index == 0){
-            return null;
-        }
-        else {
-            return getHelper(pointerNode, index);
-        }
+        Node pointerNode = this.sentinel.next;
+        return getHelper(pointerNode, index);
     }
 
     private T getHelper(Node pointer, int index){

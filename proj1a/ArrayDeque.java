@@ -69,7 +69,7 @@ public class ArrayDeque<T> {
     public int size(){
         return actualSize;
     }
-    public void printQueue(){
+    public void printDeque(){
         if (!this.isEmpty()){
             for (int i = startPoint; i < this.first; i++){
                 System.out.println(this.arrayDeque[i]);
