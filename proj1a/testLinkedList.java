@@ -13,4 +13,13 @@ public class testLinkedList {
         assertEquals((Integer) 1, testDeque.getRecursive(2));
         assertEquals((Integer) 0, testDeque.getRecursive(3));
     }
+
+    @Test
+    public void testAddFirst() {
+        ArrayDeque<Integer> testDeque = new ArrayDeque<>();
+        for (int i = 0; i < 8; i++){
+            testDeque.addLast(i);
+        }
+        testDeque.addLast(8);
+    }
 }

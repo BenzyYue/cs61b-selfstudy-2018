@@ -8,7 +8,7 @@ public class LinkedListDeque<T> {
         Node next;
     }
 
-    public LinkedListDeque(){
+    public LinkedListDeque() {
         this.sentinel = new Node();
         this.sentinel.item = null;
         this.sentinel.prev = sentinel;
@@ -16,7 +16,7 @@ public class LinkedListDeque<T> {
         this.size = 0;
     }
 
-    public void addFirst(T item){
+    public void addFirst(T item) {
         Node newNode = new Node();
         newNode.item = item;
         newNode.prev = this.sentinel;
@@ -26,7 +26,7 @@ public class LinkedListDeque<T> {
         this.size++;
     }
 
-    public void addLast(T item){
+    public void addLast(T item) {
         Node newNode = new Node();
         newNode.item = item;
         newNode.next = this.sentinel;
@@ -36,15 +36,15 @@ public class LinkedListDeque<T> {
         this.size++;
     }
 
-    public boolean isEmpty(){
+    public boolean isEmpty() {
         return this.size == 0;
     }
 
-    public int size(){
+    public int size() {
         return this.size;
     }
 
-    public void printDeque(){
+    public void printDeque() {
         int printStep = this.size;
         Node printPointer = this.sentinel.next;
         while (printStep > 0){
@@ -53,7 +53,7 @@ public class LinkedListDeque<T> {
         }
     }
 
-    public T removeFirst(){
+    public T removeFirst() {
         if (size > 0) {
             Node removeNode = this.sentinel.next;
             this.sentinel.next = removeNode.next;

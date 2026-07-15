@@ -1,116 +1,116 @@
 public class ArrayDeque<T> {
     private T[] arrayDeque;
-    private int initSize;
-    private int startPoint;
-    private int first;
-    private int last;
-    private int actualSize;
+    private int capacity;
+    private int size;
+    private int nextFirst;
+    private int nextLast;
 
-    public ArrayDeque(){
-        this.initSize = 8;
-        this.actualSize = 0;
-        this.startPoint = (this.initSize + this.actualSize) / 2;
-        this.first = this.startPoint + 1;
-        this.last = this.startPoint - 1;
-        this.arrayDeque = (T[]) new Object[initSize];
+    public ArrayDeque() {
+        this.size = 0;
+        this.capacity = 8;
+        this.arrayDeque = (T[]) new Object[this.capacity];
+        this.nextFirst = 0;
+        this.nextLast = 1;
     }
 
-    public void addFirst(T item){
-        if ((this.actualSize + 1) == this.initSize){
-            int tempInitSize = this.initSize * 2;
-            int tempStartPoint = tempInitSize / 2;
-            int tempFirst = tempStartPoint + (this.first - this.startPoint);
-            int tempLast = tempStartPoint - (this.startPoint - this.last);
-            T[] tempArrayDeque = (T[]) new Object[tempInitSize];
-            for (int i = tempFirst; i > tempStartPoint; i--){
-                tempArrayDeque[i] = this.arrayDeque[this.first];
-                this.first--;
+    public void addFirst(T item) {
+        if (this.size == this.capacity){
+            int tempCapacity = this.capacity * 2;
+            T[] tempArrayDeque = (T[]) new Object[tempCapacity];
+            tempArrayDeque[this.nextFirst] = this.arrayDeque[this.nextFirst];
+            this.nextFirst++;
+            int tempLast = this.arrayDeque.length - 1;
+            int tempArrayLast = tempArrayDeque.length - 1;
+            for (int i = tempLast; i > 0; i--) {
+                tempArrayDeque[tempArrayLast] = arrayDeque[i];
+                tempArrayLast--;
             }
-            for (int i = tempLast; i < tempStartPoint; i++){
-                tempArrayDeque[i] = this.arrayDeque[this.last];
-                this.last++;
-            }
-            this.first = tempFirst;
-            this.last = tempLast;
-            this.arrayDeque = tempArrayDeque;
+            arrayDeque = tempArrayDeque;
         }
-        this.arrayDeque[first + 1] = item;
-        this.actualSize++;
-        this.first++;
-    }
-
-    public void addLast(T item){
-        if (this.last == 0){
-            int tempInitSize = this.initSize * 2;
-            int tempStartPoint = tempInitSize / 2;
-            int tempFirst = tempStartPoint + (this.first - this.startPoint);
-            int tempLast = tempStartPoint - (this.startPoint - this.last);
-            T[] tempArrayDeque = (T[]) new Object[tempInitSize];
-            for (int i = tempFirst; i > tempStartPoint; i--){
-                tempArrayDeque[i] = this.arrayDeque[this.first];
-                this.first--;
-            }
-            for (int i = tempLast; i < tempStartPoint; i++){
-                tempArrayDeque[i] = this.arrayDeque[this.last];
-                this.last++;
-            }
-            this.first = tempFirst;
-            this.last = tempLast;
-            this.arrayDeque = tempArrayDeque;
-        }
-        this.arrayDeque[last - 1] = item;
-        this.actualSize++;
-        this.last--;
-    }
-
-    public boolean isEmpty(){
-        return actualSize == 0;
-    }
-    public int size(){
-        return actualSize;
-    }
-    public void printDeque(){
-        if (!this.isEmpty()){
-            for (int i = startPoint; i < this.first; i++){
-                System.out.println(this.arrayDeque[i]);
-            }
-            for (int i = startPoint; i > this.last; i--){
-                System.out.println(this.arrayDeque[i]);
-            }
-        }
-    }
-
-    public T removeFirst(){
-        if (!this.isEmpty()){
-            T removedItem = this.arrayDeque[first];
-            this.arrayDeque[first] = null;
-            this.first--;
-            this.actualSize--;
-            return removedItem;
-        }
-        return null;
-    }
-
-    public T removeLast(){
-        if (!this.isEmpty()){
-            T removedItem = this.arrayDeque[last];
-            this.arrayDeque[last] = null;
-            this.last++;
-            this.actualSize--;
-            return removedItem;
-        }
-        return null;
-    }
-
-    public T get(int index){
-        if (index > actualSize){
-            throw new IndexOutOfBoundsException("Index out of bound");
-        }
-        if ((startPoint + index) >= first){
-            return this.arrayDeque[index - startPoint - 1];
+        arrayDeque[this.nextFirst] = item;
+        this.size++;
+        if (this.nextFirst == 0){
+            this.nextFirst = arrayDeque.length - 1;
         }
         else {
-            return this.arrayDeque[index + startPoint + 1];
+            this.nextFirst--;
         }
+    }
+
+    public void addLast(T item) {
+        if (this.size == this.capacity){
+            int tempCapacity = this.capacity * 2;
+            T[] tempArrayDeque = (T[]) new Object[tempCapacity];
+            tempArrayDeque[this.nextFirst] = this.arrayDeque[this.nextFirst];
+            this.nextFirst++;
+            int tempLast = this.arrayDeque.length - 1;
+            int tempArrayLast = tempArrayDeque.length - 1;
+            for (int i = tempLast; i > 0; i--) {
+                tempArrayDeque[tempArrayLast] = arrayDeque[i];
+                tempArrayLast--;
+            }
+            arrayDeque = tempArrayDeque;
+        }
+        arrayDeque[nextLast] = item;
+        this.size++;
+        if (this.nextLast == this.arrayDeque.length - 1) {
+            this.nextLast = 0;
+        }
+        else {
+            this.nextLast++;
+        }
+    }
+
+    public boolean isEmpty() {
+        return this.size == 0;
+    }
+
+    public int size() {
+        return this.size;
+    }
+
+    public void printQueue() {
+        int firstPointer = this.nextFirst;
+        int tempSize = this.size;
+        while (tempSize > 0) {
+            firstPointer++;
+            if (firstPointer == this.capacity) {
+                firstPointer = 0;
+            }
+            tempSize--;
+            System.out.println(this.arrayDeque[firstPointer]);
+        }
+    }
+
+    public T removeFirst() {
+        this.nextFirst++;
+        if (this.nextFirst == this.capacity) {
+            this.nextFirst = 0;
+        }
+        T returnedItem = this.arrayDeque[this.nextFirst];
+        this.arrayDeque[this.nextFirst] = null;
+        return returnedItem;
+    }
+
+    public T removeLast() {
+        this.nextLast--;
+        if (this.nextLast == -1) {
+            this.nextLast = this.capacity - 1;
+        }
+        T returnedItem = this.arrayDeque[this.nextLast];
+        this.arrayDeque[this.nextLast] = null;
+        return returnedItem;
+    }
+
+    public T get(int index) {
+        int firstPointer = this.nextFirst;
+        while (index > 0){
+            firstPointer++;
+            if (firstPointer == this.capacity) {
+                firstPointer = 0;
+            }
+            index--;
+        }
+        return this.arrayDeque[firstPointer];
     }
 }
