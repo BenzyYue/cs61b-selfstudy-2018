@@ -18,7 +18,6 @@ public class ArrayDeque<T> {
             int tempCapacity = this.capacity * 2;
             T[] tempArrayDeque = (T[]) new Object[tempCapacity];
             tempArrayDeque[this.nextFirst] = this.arrayDeque[this.nextFirst];
-            this.nextFirst++;
             int tempLast = this.arrayDeque.length - 1;
             int tempArrayLast = tempArrayDeque.length - 1;
             for (int i = tempLast; i > 0; i--) {
@@ -43,7 +42,6 @@ public class ArrayDeque<T> {
             int tempCapacity = this.capacity * 2;
             T[] tempArrayDeque = (T[]) new Object[tempCapacity];
             tempArrayDeque[this.nextFirst] = this.arrayDeque[this.nextFirst];
-            this.nextFirst++;
             int tempLast = this.arrayDeque.length - 1;
             int tempArrayLast = tempArrayDeque.length - 1;
             for (int i = tempLast; i > 0; i--) {
@@ -85,18 +83,26 @@ public class ArrayDeque<T> {
     }
 
     public T removeFirst() {
+        if (size == 0) {
+            return null;
+        }
         this.nextFirst++;
         if (this.nextFirst == this.capacity) {
             this.nextFirst = 0;
         }
+        this.size--;
         return this.arrayDeque[this.nextFirst];
     }
 
     public T removeLast() {
+        if (size == 0) {
+            return null;
+        }
         this.nextLast--;
         if (this.nextLast == -1) {
             this.nextLast = this.capacity - 1;
         }
+        this.size--;
         return this.arrayDeque[this.nextLast];
     }
 
