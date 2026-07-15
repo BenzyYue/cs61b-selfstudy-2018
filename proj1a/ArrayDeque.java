@@ -26,6 +26,7 @@ public class ArrayDeque<T> {
                 tempArrayLast--;
             }
             arrayDeque = tempArrayDeque;
+            this.nextFirst = tempArrayLast - 1;
         }
         arrayDeque[this.nextFirst] = item;
         this.size++;
@@ -50,6 +51,7 @@ public class ArrayDeque<T> {
                 tempArrayLast--;
             }
             arrayDeque = tempArrayDeque;
+            this.nextFirst = tempArrayLast;
         }
         arrayDeque[nextLast] = item;
         this.size++;
@@ -69,7 +71,7 @@ public class ArrayDeque<T> {
         return this.size;
     }
 
-    public void printQueue() {
+    public void printDeque() {
         int firstPointer = this.nextFirst;
         int tempSize = this.size;
         while (tempSize > 0) {
@@ -87,9 +89,7 @@ public class ArrayDeque<T> {
         if (this.nextFirst == this.capacity) {
             this.nextFirst = 0;
         }
-        T returnedItem = this.arrayDeque[this.nextFirst];
-        this.arrayDeque[this.nextFirst] = null;
-        return returnedItem;
+        return this.arrayDeque[this.nextFirst];
     }
 
     public T removeLast() {
@@ -97,20 +97,23 @@ public class ArrayDeque<T> {
         if (this.nextLast == -1) {
             this.nextLast = this.capacity - 1;
         }
-        T returnedItem = this.arrayDeque[this.nextLast];
-        this.arrayDeque[this.nextLast] = null;
-        return returnedItem;
+        return this.arrayDeque[this.nextLast];
     }
 
     public T get(int index) {
-        int firstPointer = this.nextFirst;
-        while (index > 0){
-            firstPointer++;
-            if (firstPointer == this.capacity) {
-                firstPointer = 0;
-            }
-            index--;
+        if (index + 1 > size) {
+            return null;
         }
-        return this.arrayDeque[firstPointer];
+
+        int tempFirst = this.nextFirst;
+
+        while (index >= 0){
+            tempFirst++;
+            index--;
+            if (tempFirst == this.capacity) {
+                tempFirst = 0;
+            }
+        }
+        return this.arrayDeque[tempFirst];
     }
 }
