@@ -26,6 +26,7 @@ public class ArrayDeque<T> {
             }
             arrayDeque = tempArrayDeque;
             this.nextFirst = tempArrayLast - 1;
+            this.capacity = tempCapacity;
         }
         arrayDeque[this.nextFirst] = item;
         this.size++;
@@ -50,6 +51,7 @@ public class ArrayDeque<T> {
             }
             arrayDeque = tempArrayDeque;
             this.nextFirst = tempArrayLast;
+            this.capacity = tempCapacity;
         }
         arrayDeque[nextLast] = item;
         this.size++;
