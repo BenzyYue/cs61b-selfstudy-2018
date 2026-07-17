@@ -47,7 +47,7 @@ public class LinkedListDeque<T> {
     public void printDeque() {
         int printStep = this.size;
         Node printPointer = this.sentinel.next;
-        while (printStep > 0){
+        while (printStep > 0) {
             System.out.println(printPointer.item);
             printStep--;
         }
@@ -64,7 +64,7 @@ public class LinkedListDeque<T> {
         return null;
     }
 
-    public T removeLast(){
+    public T removeLast() {
         if (size > 0) {
             Node removeNode = this.sentinel.prev;
             this.sentinel.prev = removeNode.prev;
@@ -75,31 +75,30 @@ public class LinkedListDeque<T> {
         return null;
     }
 
-    public T get(int index){
-        if (index > this.size){
+    public T get(int index) {
+        if (index > this.size) {
             throw new IndexOutOfBoundsException("Index out of bound");
         }
         Node pointerNode = this.sentinel.next;
-        while (index > 0){
+        while (index > 0) {
             pointerNode = pointerNode.next;
             index--;
         }
         return pointerNode.item;
     }
 
-    public T getRecursive(int index){
-        if (index > this.size){
+    public T getRecursive(int index) {
+        if (index > this.size) {
             throw new IndexOutOfBoundsException("Index out of bound");
         }
         Node pointerNode = this.sentinel.next;
         return getHelper(pointerNode, index);
     }
 
-    private T getHelper(Node pointer, int index){
-        if (index == 0){
+    private T getHelper(Node pointer, int index) {
+        if (index == 0) {
             return pointer.item;
-        }
-        else {
+        } else {
             return getHelper(pointer.next, index - 1);
         }
     }

@@ -59,6 +59,16 @@ public class ArrayDeque<T> {
         return returnedItem;
     }
 
+    public void printDeque() {
+        int tempFirst = this.currentFirst;
+        int tempLast = this.currentLast;
+
+        while (tempFirst != tempLast) {
+            System.out.println(this.arrayDeque[tempFirst]);
+            tempFirst = this.plusOne(tempFirst);
+        }
+    }
+
     public T get(int index) {
         if (index > this.size - 1) {
             return null;
