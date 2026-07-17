@@ -20,6 +20,8 @@ public class testLinkedList {
         for (int i = 0; i < 9; i++){
             testDeque.addLast(i);
         }
-        System.out.println(testDeque.get(0));
+        for (int i = 0; i < 9; i++){
+            assertEquals((Integer) i, testDeque.get(i));
+        }
     }
 }

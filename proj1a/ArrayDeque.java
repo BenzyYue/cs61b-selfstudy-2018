@@ -8,8 +8,8 @@ public class ArrayDeque<T> {
     private int capacity;
 
     public ArrayDeque() {
-        this.currentFirst = 0;
-        this.currentLast = 1;
+        this.currentFirst = 1;
+        this.currentLast = 0;
         this.nextFirst = 0;
         this.nextLast = 1;
         this.size = 0;
@@ -54,11 +54,11 @@ public class ArrayDeque<T> {
     }
 
     public T get(int index) {
-        if (index > this.size) {
+        if (index > this.size - 1) {
             return null;
         }
         int pointer = this.currentFirst;
-        while (index > -1) {
+        while (index > 0) {
             pointer = this.plusOne(pointer);
             index--;
         }
@@ -75,31 +75,33 @@ public class ArrayDeque<T> {
 
     private int minusOne(int index) {
         if ((index - 1) < 0) {
-            return this.arrayDeque.length - 1;
+            return this.capacity - 1;
         }
         return index - 1;
     }
 
     private int plusOne(int index) {
-        if ((index + 1) > (this.arrayDeque.length - 1)) {
+        if ((index + 1) > (this.capacity - 1)) {
             return 0;
         }
         return index + 1;
     }
 
     private void resize() {
-        int tempCapacity = this.capacity * 2;
-        T[] tempArrayDeque = (T[]) new Object[tempCapacity];
+        this.capacity = this.capacity * 2;
+        T[] tempArrayDeque = (T[]) new Object[this.capacity];
         int pointer = this.currentFirst;
         for (int i = 0; i < this.size; i++) {
             tempArrayDeque[i] = this.arrayDeque[pointer];
-            pointer = this.plusOne(pointer);
+            pointer++;
+            if (pointer > this.size - 1) {
+                pointer = 0;
+            }
         }
         this.currentFirst = 0;
         this.currentLast = this.size - 1;
         this.nextFirst = this.minusOne(this.currentFirst);
         this.nextLast = this.plusOne(this.currentLast);
-        this.capacity = tempCapacity;
         this.arrayDeque = tempArrayDeque;
     }
 }
