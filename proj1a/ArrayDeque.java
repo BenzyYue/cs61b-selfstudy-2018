@@ -43,7 +43,7 @@ public class ArrayDeque<T> {
         }
         T returnedItem = this.arrayDeque[currentFirst];
         this.nextFirst = this.plusOne(this.nextFirst);
-        this.currentFirst = this.minusOne(this.currentFirst);
+        this.currentFirst = this.plusOne(this.currentFirst);
         this.size--;
         return returnedItem;
     }

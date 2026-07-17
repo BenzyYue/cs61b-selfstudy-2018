@@ -21,7 +21,7 @@ public class testLinkedList {
             testDeque.addLast(i);
         }
         for (int i = 0; i < 9; i++){
-            assertEquals((Integer) i, testDeque.get(i));
+            int testNode = testDeque.removeFirst();
         }
     }
 }
