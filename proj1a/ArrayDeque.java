@@ -38,6 +38,9 @@ public class ArrayDeque<T> {
     }
 
     public T removeFirst() {
+        if (!(this.size > 0)) {
+            return null;
+        }
         T returnedItem = this.arrayDeque[currentFirst];
         this.nextFirst = this.plusOne(this.nextFirst);
         this.currentFirst = this.minusOne(this.currentFirst);
@@ -46,6 +49,9 @@ public class ArrayDeque<T> {
     }
 
     public T removeLast() {
+        if (!(this.size > 0)) {
+            return null;
+        }
         T returnedItem = this.arrayDeque[currentLast];
         this.nextLast = this.minusOne(this.nextLast);
         this.currentLast = this.minusOne(this.currentLast);
